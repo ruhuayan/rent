@@ -1,1 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  font-family: Helvetica,Arial,Lucida,sans-serif;
+  margin: 0;
+  padding: 0;
+}
+header {
+  display: flex;
+  background-color: #19ac52;
+  border: none;
+  color: #fff;
+  align-items: center;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  .logo { padding: 1rem;}
+  .search {
+    flex: 1;
+  }
+  ul.nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      margin: 0;
+      padding: 1rem;
+      border: 0;
+      a {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        color: #fff;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        mat-icon { padding-right: .5rem;}
+      }
+      ul.sub-nav {
+        display: none;
+      }
+    }
+  }
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
