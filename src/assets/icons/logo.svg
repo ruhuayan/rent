@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
+
+<g> <text text-anchor="middle" x="500" y="580">RENT</text>
+<path d="M850,580.8c-12.8,0-23.4,10.2-23.4,23v253.8c0,25.6-20.8,46.2-46.6,46.2H616.6c-12.8,0-23.2,10.4-23.2,23.2c0,12.6,10.4,23,23.2,23H780c51.4,0,93.4-41.4,93.4-92.4V603.8C873.4,591,862.8,580.8,850,580.8z M983.2,518.2L516.6,56.7c-9.2-9-24-9-33,0L133.8,402.6l-0.6,0.6l-116.4,115c-9,9.2-9,23.8,0,32.8c9.2,9,24,9,33,0l76.8-76v382.6c0,51,42,92.4,93.4,92.4h163.4c12.8,0,23.2-10.4,23.2-23V719.2h210c13,0,23.4-10.2,23.4-23S629.6,673,616.6,673H383.4c-13,0-23.4,10.4-23.4,23.2l0,207.6H220c-25.8,0-46.6-20.6-46.6-46.2V428.8l326.6-323L950.2,551c4.6,4.4,10.4,6.6,16.4,6.6s12-2.2,16.6-6.6C992.3,542,992.3,527.4,983.2,518.2z"/></g>
+<style><![CDATA[
+  text {
+    font: bold 200px Verdana, Helvetica, Arial, sans-serif;
+    fill: #eee;
+  }
+  path {
+    fill: #eee;
+  }
+  ]]></style>
+</svg>
