@@ -15,6 +15,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit {
+  inputType = 'password';
+  visible = true;
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -30,4 +32,8 @@ export class AuthComponent implements OnInit {
   ngOnInit() {
   }
 
+  togglePassword() {
+    this.visible = !this.visible; 
+    this.inputType = this.visible ? 'password' : 'text';console.log(this.visible, this.inputType)
+  }
 }
