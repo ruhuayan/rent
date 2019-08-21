@@ -1,12 +1,12 @@
 <div class="rent-auth">
   
-  <div class="rent-login">
-    <div class="rent-login_header  background-primary">
-      <div class="login-header_image"><img src="/assets/icons/logo.svg"></div>
-      <div class="login-header_title uppercase">Login</div>
+  <div class="auth-card rent-login" *ngIf="formType == 'login'">
+    <div class="auth-card_header background-primary">
+      <div class="card-header_image"><img src="/assets/icons/logo.svg"></div>
+      <div class="card-header_title uppercase">Login</div>
     </div>
-    <div class="rent-login_content">
-      <form class="login-form">
+    <div class="auth-card_content">
+      <form class="auth-form">
          <mat-form-field class="full-width">
           <input matInput placeholder="Email" [formControl]="emailFormControl"
                   [errorStateMatcher]="matcher" required autocomplete="off">
@@ -18,12 +18,12 @@
           </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input matInput #password placeholder="Password" [formControl]="passwordFormControl"
-                  [errorStateMatcher]="matcher" [type]="inputType" required>
-          <button *ngIf="visible" type="button" mat-icon-button matSuffix (click)="togglePassword()">
+          <input matInput placeholder="Password" [formControl]="passwordFormControl"
+                  [errorStateMatcher]="matcher" [type]="formVars.login.inputType" required>
+          <button *ngIf="formVars.login.visible" type="button" mat-icon-button matSuffix (click)="togglePassword('login')">
               <mat-icon>visibility</mat-icon>
           </button>
-          <button *ngIf="!visible" type="button" mat-icon-button matSuffix (click)="togglePassword()">
+          <button *ngIf="!formVars.login.visible" type="button" mat-icon-button matSuffix (click)="togglePassword('login')">
             <mat-icon>visibility_off</mat-icon>
           </button>
           <mat-hint>Click the eye to toggle visibility</mat-hint>
@@ -36,14 +36,100 @@
         </mat-form-field>
         <section class="remember">
             <mat-checkbox class="rememberme">Remember me</mat-checkbox>
-            <a href="javascript:;">Forgot Password?</a>
+            <a href="javascript:;" (click)="openForm('forgot')">Forgot Password?</a>
         </section>
         
-        <button mat-raised-button color="primary" class="full-width">Login</button>
+        <button mat-raised-button color="primary" class="full-width ">Login</button>
       </form>
     </div>
-    <div class="rent-login_footer"> Don't have an account?<br >
-      <a href="javascript:;">Click here to create one</a></div>
+    <div class="auth-card_footer"> Don't have an account?<br >
+      <a href="javascript:;" (click)="openForm('signup')">Click here to create one</a>
+    </div>
   </div>
 
+  <div class="auth-card rent-signup" *ngIf="formType=='signup'">
+    <div class="auth-card_header  background-primary">
+      <div class="card-header_image"><img src="/assets/icons/logo.svg"></div>
+      <div class="card-header_title uppercase">SIGNUP</div>
+    </div>
+    <div class="auth-card_content">
+      <form class="signup-form">
+         <mat-form-field class="full-width">
+          <input matInput placeholder="Email" [formControl]="emailFormControl"
+                  [errorStateMatcher]="matcher" required autocomplete="off">
+          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Password" [formControl]="passwordFormControl"
+                  [errorStateMatcher]="matcher" [type]="formVars.signup.inputType" required>
+          <button *ngIf="formVars.signup.visible" type="button" mat-icon-button matSuffix (click)="togglePassword('signup')">
+              <mat-icon>visibility</mat-icon>
+          </button>
+          <button *ngIf="!formVars.signup.visible" type="button" mat-icon-button matSuffix (click)="togglePassword('signup')">
+            <mat-icon>visibility_off</mat-icon>
+          </button>
+          <mat-hint>Click the eye to toggle visibility</mat-hint>
+          <mat-error *ngIf="passwordFormControl.hasError('email') && !passwordFormControl.hasError('required')">
+            Please enter a valid password
+          </mat-error>
+          <mat-error *ngIf="passwordFormControl.hasError('required')">
+            Password is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput #password placeholder="Password(Confirm)" [formControl]="passwordFormControl"
+                  [errorStateMatcher]="matcher" [type]="formVars.repass.inputType" required>
+          <button *ngIf="formVars.repass.visible" type="button" mat-icon-button matSuffix (click)="togglePassword('repass')">
+              <mat-icon>visibility</mat-icon>
+          </button>
+          <button *ngIf="!formVars.repass.visible" type="button" mat-icon-button matSuffix (click)="togglePassword('repass')">
+            <mat-icon>visibility_off</mat-icon>
+          </button>
+          <mat-hint>Please repeat your password from above</mat-hint>
+          <mat-error *ngIf="passwordFormControl.hasError('email') && !passwordFormControl.hasError('required')">
+            Please enter a valid password
+          </mat-error>
+          <mat-error *ngIf="passwordFormControl.hasError('required')">
+            Password is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <section class="terms">
+            <mat-checkbox class="terms">I accept the <a href="javascript:;">terms and conditions.</a></mat-checkbox>
+        </section>
+        
+        <button mat-raised-button color="primary" class="full-width">Signup</button>
+      </form>
+    </div>
+    <div class="auth-card_footer"> Already have an account?<br >
+      <a href="javascript:;" (click)="openForm('login')">Sign in here</a>
+    </div>
+  </div>
+
+  <div class="auth-card rent-forgot" *ngIf="formType == 'forgot'">
+    <div class="auth-card_header background-primary">
+      <div class="card-header_image"><img src="/assets/icons/logo.svg"></div>
+      <div class="card-header_title uppercase">Recover Password</div>
+    </div>
+    <div class="auth-card_content">
+      <form class="auth-form">
+         <mat-form-field class="full-width">
+          <input matInput placeholder="Email" [formControl]="emailFormControl"
+                  [errorStateMatcher]="matcher" required autocomplete="off">
+          <mat-hint>Enter your email to recover your password.</mat-hint>
+          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a valid password
+          </mat-error>
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="full-width recover">Recover</button>
+      </form>
+    </div>
+  </div>
 </div>
