@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {FormControl, FormGroupDirective, NgForm, Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -15,6 +15,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit {
+  loginForm: FormGroup;
+  signupForm: FormGroup;
+  forgotForm: FormGroup;
   formVars = {
     login: {
       inputType: 'password',
@@ -29,28 +32,46 @@ export class AuthComponent implements OnInit {
       visible: true
     }
   }
-  
-  formType = 'login';
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-  passwordFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
 
+  formType = 'login';
   matcher = new MyErrorStateMatcher();
-  constructor() { }
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email] ],
+      password: ['', Validators.required],
+      rememberme: [false, ]
+    });
+    this.signupForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email] ],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      repassword: ['', Validators.required],
+      acceptTerms: [false, Validators.requiredTrue]
+    });
+    this.forgotForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email] ]
+    });
   }
 
   togglePassword(inputName) {
-    this.formVars[inputName].visible = !this.formVars[inputName].visible ; 
+    this.formVars[inputName].visible = !this.formVars[inputName].visible ;
     this.formVars[inputName].inputType = this.formVars[inputName].visible ? 'password' : 'text';
   }
   openForm(formType) {
     this.formType = formType;
+  }
+
+  login() {
+    if (this.loginForm.valid) {
+      console.log(this.loginForm.value);
+    }
+  }
+  signup() {
+    if (this.signupForm.valid) {
+      console.log(this.signupForm.value);
+    }
+  }
+  recover() { console.log(this.forgotForm.value);
   }
 }

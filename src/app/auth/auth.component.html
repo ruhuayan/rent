@@ -1,24 +1,24 @@
 <div class="rent-auth">
-  
+
   <div class="auth-card rent-login" *ngIf="formType == 'login'">
     <div class="auth-card_header background-primary">
       <div class="card-header_image"><img src="/assets/icons/logo.svg"></div>
       <div class="card-header_title uppercase">Login</div>
     </div>
     <div class="auth-card_content">
-      <form class="auth-form">
+      <form class="auth-form" [formGroup]="loginForm" (ngSubmit)="login()">
          <mat-form-field class="full-width">
-          <input matInput placeholder="Email" [formControl]="emailFormControl"
+          <input matInput placeholder="Email" formControlName="email"
                   [errorStateMatcher]="matcher" required autocomplete="off">
-          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          <mat-error *ngIf="loginForm.controls.email.hasError('email') && !loginForm.controls.email.hasError('required')">
             Please enter a valid email address
           </mat-error>
-          <mat-error *ngIf="emailFormControl.hasError('required')">
+          <mat-error *ngIf="loginForm.controls.email.hasError('required')">
             Email is <strong>required</strong>
           </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input matInput placeholder="Password" [formControl]="passwordFormControl"
+          <input matInput placeholder="Password" formControlName="password"
                   [errorStateMatcher]="matcher" [type]="formVars.login.inputType" required>
           <button *ngIf="formVars.login.visible" type="button" mat-icon-button matSuffix (click)="togglePassword('login')">
               <mat-icon>visibility</mat-icon>
@@ -27,18 +27,15 @@
             <mat-icon>visibility_off</mat-icon>
           </button>
           <mat-hint>Click the eye to toggle visibility</mat-hint>
-          <mat-error *ngIf="passwordFormControl.hasError('email') && !passwordFormControl.hasError('required')">
-            Please enter a valid password
-          </mat-error>
-          <mat-error *ngIf="passwordFormControl.hasError('required')">
+          <mat-error *ngIf="loginForm.controls.password.hasError('required')">
             Password is <strong>required</strong>
           </mat-error>
         </mat-form-field>
         <section class="remember">
-            <mat-checkbox class="rememberme">Remember me</mat-checkbox>
+            <mat-checkbox class="rememberme" formControlName="rememberme">Remember me</mat-checkbox>
             <a href="javascript:;" (click)="openForm('forgot')">Forgot Password?</a>
         </section>
-        
+
         <button mat-raised-button color="primary" class="full-width ">Login</button>
       </form>
     </div>
@@ -53,19 +50,19 @@
       <div class="card-header_title uppercase">SIGNUP</div>
     </div>
     <div class="auth-card_content">
-      <form class="signup-form">
+      <form class="signup-form" [formGroup]="signupForm" (ngSubmit)="signup()">
          <mat-form-field class="full-width">
-          <input matInput placeholder="Email" [formControl]="emailFormControl"
+          <input matInput placeholder="Email" formControlName="email"
                   [errorStateMatcher]="matcher" required autocomplete="off">
-          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          <mat-error *ngIf="signupForm.controls.email.hasError('email') && !signupForm.controls.email.hasError('required')">
             Please enter a valid email address
           </mat-error>
-          <mat-error *ngIf="emailFormControl.hasError('required')">
+          <mat-error *ngIf="signupForm.controls.email.hasError('required')">
             Email is <strong>required</strong>
           </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input matInput placeholder="Password" [formControl]="passwordFormControl"
+          <input matInput placeholder="Password" formControlName="password"
                   [errorStateMatcher]="matcher" [type]="formVars.signup.inputType" required>
           <button *ngIf="formVars.signup.visible" type="button" mat-icon-button matSuffix (click)="togglePassword('signup')">
               <mat-icon>visibility</mat-icon>
@@ -73,16 +70,16 @@
           <button *ngIf="!formVars.signup.visible" type="button" mat-icon-button matSuffix (click)="togglePassword('signup')">
             <mat-icon>visibility_off</mat-icon>
           </button>
-          <mat-hint>Click the eye to toggle visibility</mat-hint>
-          <mat-error *ngIf="passwordFormControl.hasError('email') && !passwordFormControl.hasError('required')">
-            Please enter a valid password
+          <mat-hint>Password should contains at least 6 alphanumberics</mat-hint>
+          <mat-error *ngIf="signupForm.controls.password.hasError('minlength')">
+              Password should contains at least <strong>6</strong> alphanumberics
           </mat-error>
-          <mat-error *ngIf="passwordFormControl.hasError('required')">
-            Password is <strong>required</strong>
+          <mat-error *ngIf="signupForm.controls.password.hasError('required')">
+              Password is <strong>required</strong>
           </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input matInput #password placeholder="Password(Confirm)" [formControl]="passwordFormControl"
+          <input matInput #password placeholder="Password(Confirm)" formControlName="repassword"
                   [errorStateMatcher]="matcher" [type]="formVars.repass.inputType" required>
           <button *ngIf="formVars.repass.visible" type="button" mat-icon-button matSuffix (click)="togglePassword('repass')">
               <mat-icon>visibility</mat-icon>
@@ -91,17 +88,16 @@
             <mat-icon>visibility_off</mat-icon>
           </button>
           <mat-hint>Please repeat your password from above</mat-hint>
-          <mat-error *ngIf="passwordFormControl.hasError('email') && !passwordFormControl.hasError('required')">
-            Please enter a valid password
-          </mat-error>
-          <mat-error *ngIf="passwordFormControl.hasError('required')">
-            Password is <strong>required</strong>
+          <mat-error *ngIf="signupForm.controls.repassword.hasError('required')">
+            Password(confirm) is <strong>required</strong>
           </mat-error>
         </mat-form-field>
         <section class="terms">
-            <mat-checkbox class="terms">I accept the <a href="javascript:;">terms and conditions.</a></mat-checkbox>
+            <mat-checkbox class="terms" formControlName="acceptTerms" [ngClass]="{'submitted': signupForm.submitted}">
+              I accept the <a href="javascript:;">terms and conditions.</a>
+            </mat-checkbox>
         </section>
-        
+
         <button mat-raised-button color="primary" class="full-width">Signup</button>
       </form>
     </div>
@@ -116,20 +112,23 @@
       <div class="card-header_title uppercase">Recover Password</div>
     </div>
     <div class="auth-card_content">
-      <form class="auth-form">
+      <form class="auth-form" [formGroup]="forgotForm" (ngSubmit)="recover()">
          <mat-form-field class="full-width">
-          <input matInput placeholder="Email" [formControl]="emailFormControl"
+          <input matInput placeholder="Email" formControlName="email"
                   [errorStateMatcher]="matcher" required autocomplete="off">
           <mat-hint>Enter your email to recover your password.</mat-hint>
-          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          <mat-error *ngIf="forgotForm.controls.email.hasError('email') && !forgotForm.controls.email.hasError('required')">
             Please enter a valid password
           </mat-error>
-          <mat-error *ngIf="emailFormControl.hasError('required')">
+          <mat-error *ngIf="forgotForm.controls.email.hasError('required')">
             Email is <strong>required</strong>
           </mat-error>
         </mat-form-field>
         <button mat-raised-button color="primary" class="full-width recover">Recover</button>
       </form>
+    </div>
+    <div class="auth-card_footer">
+      <a href="javascript:;" (click)="openForm('login')">Back</a>
     </div>
   </div>
 </div>
