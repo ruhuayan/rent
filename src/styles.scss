@@ -46,3 +46,11 @@ header {
 .background-primary { background: #1976d2;}
 .uppercase { text-transform: uppercase; }
 .margin-top { margin-top: 10rem;}
+mat-checkbox.error {
+  .mat-checkbox-frame{
+    border-color: red;
+  }
+  .mat-checkbox-label {
+    color: red;
+  }
+} 

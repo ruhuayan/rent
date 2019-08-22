@@ -25,7 +25,8 @@ export class AuthComponent implements OnInit {
     },
     signup: {
       inputType: 'password',
-      visible: true
+      visible: true,
+      submitted: false
     },
     repass: {
       inputType: 'password',
@@ -46,14 +47,18 @@ export class AuthComponent implements OnInit {
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email] ],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      repassword: ['', Validators.required],
+      repassword: [''],
       acceptTerms: [false, Validators.requiredTrue]
-    });
+    }, {validators: this.checkPasswords});
     this.forgotForm = this.fb.group({
       email: ['', [Validators.required, Validators.email] ]
     });
   }
-
+  private checkPasswords(fb: FormGroup) {
+    const pass = fb.get('password').value;
+    const repass = fb.get('repassword').value;
+    return pass === repass ? null : {notSame: true};
+  }
   togglePassword(inputName) {
     this.formVars[inputName].visible = !this.formVars[inputName].visible ;
     this.formVars[inputName].inputType = this.formVars[inputName].visible ? 'password' : 'text';
@@ -68,8 +73,10 @@ export class AuthComponent implements OnInit {
     }
   }
   signup() {
+    this.formVars.signup.submitted = true;
+    console.log(this.signupForm);
     if (this.signupForm.valid) {
-      console.log(this.signupForm.value);
+      
     }
   }
   recover() { console.log(this.forgotForm.value);
