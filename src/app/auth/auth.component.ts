@@ -54,31 +54,29 @@ export class AuthComponent implements OnInit {
       email: ['', [Validators.required, Validators.email] ]
     });
   }
-  private checkPasswords(fb: FormGroup) {
-    const pass = fb.get('password').value;
-    const repass = fb.get('repassword').value;
-    return pass === repass ? null : {notSame: true};
+  private checkPasswords(fb: FormGroup): {notSame: boolean} {
+    return fb.get('password').value === fb.get('repassword').value ? null : {notSame: true};
   }
-  togglePassword(inputName) {
+  togglePassword(inputName): void {
     this.formVars[inputName].visible = !this.formVars[inputName].visible ;
     this.formVars[inputName].inputType = this.formVars[inputName].visible ? 'password' : 'text';
   }
-  openForm(formType) {
+  openForm(formType): void {
     this.formType = formType;
   }
 
-  login() {
+  login(): void {
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
     }
   }
-  signup() {
+  signup(): void {
     this.formVars.signup.submitted = true;
     console.log(this.signupForm);
     if (this.signupForm.valid) {
-      
+      console.log(this.signupForm.value);
     }
   }
-  recover() { console.log(this.forgotForm.value);
+  recover(): void { console.log(this.forgotForm.value);
   }
 }
