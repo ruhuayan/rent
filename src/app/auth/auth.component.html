@@ -8,12 +8,12 @@
     <div class="auth-card_content">
       <form class="auth-form" [formGroup]="loginForm" (ngSubmit)="login()">
          <mat-form-field class="full-width">
-          <input matInput placeholder="Email" formControlName="email"
+          <input matInput placeholder="Email" formControlName="username"
                   [errorStateMatcher]="matcher" required autocomplete="off">
-          <mat-error *ngIf="loginForm.controls.email.hasError('email') && !loginForm.controls.email.hasError('required')">
+          <mat-error *ngIf="loginForm.controls.username.hasError('email') && !loginForm.controls.username.hasError('required')">
             Please enter a valid email address
           </mat-error>
-          <mat-error *ngIf="loginForm.controls.email.hasError('required')">
+          <mat-error *ngIf="loginForm.controls.username.hasError('required')">
             Email is <strong>required</strong>
           </mat-error>
         </mat-form-field>
@@ -36,7 +36,7 @@
             <a href="javascript:;" (click)="openForm('forgot')">Forgot Password?</a>
         </section>
 
-        <button mat-raised-button color="primary" class="full-width ">Login</button>
+            <m-spinner-button [options]="spinner" (click)="login()">Login</m-spinner-button>
       </form>
     </div>
     <div class="auth-card_footer"> Don't have an account?<br >
@@ -52,12 +52,12 @@
     <div class="auth-card_content">
       <form class="signup-form" [formGroup]="signupForm" (ngSubmit)="signup()">
          <mat-form-field class="full-width">
-          <input matInput placeholder="Email" formControlName="email"
+          <input matInput placeholder="Email" formControlName="username"
                   [errorStateMatcher]="matcher" required autocomplete="off">
-          <mat-error *ngIf="signupForm.controls.email.hasError('email') && !signupForm.controls.email.hasError('required')">
+          <mat-error *ngIf="signupForm.controls.username.hasError('email') && !signupForm.controls.username.hasError('required')">
             Please enter a valid email address
           </mat-error>
-          <mat-error *ngIf="signupForm.controls.email.hasError('required')">
+          <mat-error *ngIf="signupForm.controls.username.hasError('required')">
             Email is <strong>required</strong>
           </mat-error>
         </mat-form-field>
@@ -101,7 +101,8 @@
             </mat-checkbox>
         </section>
 
-        <button mat-raised-button color="primary" class="full-width">Signup</button>
+        <!-- <button mat-raised-button color="primary" class="full-width">Signup</button> -->
+        <m-spinner-button [options]="spinner" (click)="signup()">Signup</m-spinner-button>
       </form>
     </div>
     <div class="auth-card_footer"> Already have an account?<br >
@@ -127,7 +128,10 @@
             Email is <strong>required</strong>
           </mat-error>
         </mat-form-field>
-        <button mat-raised-button color="primary" class="full-width recover">Recover</button>
+        <div class="auth-card_action">
+          <m-spinner-button [options]="spinner" (click)="recover()">Recover</m-spinner-button>
+        </div>
+
       </form>
     </div>
     <div class="auth-card_footer">

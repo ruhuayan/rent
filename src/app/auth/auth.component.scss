@@ -51,9 +51,23 @@
       padding: .5rem 0 3rem 0;
     }
   }
-  .rent-forgot button.recover {margin-top: 1.2rem;}
+  .rent-forgot .auth-card_action{margin-top: 1.2rem;}
   a {
     color: #666;
   }
 
+}
+
+::ng-deep snack-bar-container.snack-error {
+  width: 380px;
+  margin: auto;
+  background: red;
+  color: #fff;
+  .mat-button-wrapper {
+    color: #333;
+  }
+}
+
+::ng-deep .custom-class .mat-simple-snackbar {
+  color: green;
 }
