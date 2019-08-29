@@ -87,8 +87,9 @@ export class AuthComponent implements OnInit {
   }
 
   login(): void {
-    this.spinner.active = true;
+   
     if (this.loginForm.valid) {
+      this.spinner.active = true;
       console.log(this.loginForm.value);
       this.authService.login(this.loginForm.value as Credential).subscribe(
         res => {
@@ -103,15 +104,16 @@ export class AuthComponent implements OnInit {
         err => {
           console.log(err);
           this.spinner.active = false;
-          this.snackBar.open(err.error.detail, 'close', {panelClass: ['snack-error'] });
+          this.snackBar.open(err.error.detail || err.message, 'close', {panelClass: ['snack-error'] });
         }
       );
     }
   }
   signup(): void {
-    this.spinner.active = true;
+    
     this.formVars.signup.submitted = true;
     if (this.signupForm.valid) {
+      this.spinner.active = true;
       console.log(this.signupForm.value);
       this.authService.register(this.signupForm.value as Credential).subscribe(res => {
         if (typeof res !== 'undefined') {
@@ -126,8 +128,9 @@ export class AuthComponent implements OnInit {
     }
   }
   recover(): void {
-    this.spinner.active = true;
+    
     if (this.forgotForm.valid) {
+      this.spinner.active = true;
       console.log(this.forgotForm.value);
       this.authService.requestPassword(this.forgotForm.value).subscribe(
         res => {

@@ -1,9 +1,6 @@
-:host { width: 100%;
-	// button span.mat-button-wrapper {
-	// 	display: flex;
-	// 	align-items: center;
-	// 	justify-content: center;
-	// }
+:host { 
+	width: 100%;
+	
 	button.active {
 		cursor: not-allowed;
 	}
