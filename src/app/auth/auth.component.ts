@@ -96,7 +96,7 @@ export class AuthComponent implements OnInit {
           if (typeof res !== 'undefined') {
             this.router.navigate(['/']);
           } else {
-            this.snackBar.open('Login failed', 'close', { duration: 2000 });
+            this.showMsg('Login failed', false);
           }
           this.spinner.active = false;
           this.cdr.detectChanges();
@@ -104,7 +104,7 @@ export class AuthComponent implements OnInit {
         err => {
           console.log(err);
           this.spinner.active = false;
-          this.snackBar.open(err.error.detail || err.message, 'close', {panelClass: ['snack-error'] });
+          this.showMsg(err.error.detail || err.message, false);
         }
       );
     }
@@ -118,14 +118,20 @@ export class AuthComponent implements OnInit {
       this.authService.register(this.signupForm.value as Credential).subscribe(res => {
         if (typeof res !== 'undefined') {
           this.router.navigate(['/']);
+
+          this.showMsg('Check your email to activate the account', true);
         } else {
+          this.showMsg('Register failed', false);
         }
         this.spinner.active = false;
         this.cdr.detectChanges();
+      }, 
+      err => {
+        console.log(err);
+        this.spinner.active = false;
+        this.showMsg(err.error.detail || err.message, false);
       });
-    } else {
-      this.spinner.active = false;
-    }
+    } 
   }
   recover(): void {
     
@@ -135,12 +141,21 @@ export class AuthComponent implements OnInit {
       this.authService.requestPassword(this.forgotForm.value).subscribe(
         res => {
           if (typeof res !== 'undefined') {
-
+            this.showMsg('Check your email to activate the account', true);
           } else {
+            this.showMsg('Reset Password Request failed', false);
           }
+          
           this.spinner.active = false;
+        }, err => {
+          this.spinner.active = false;
+          this.showMsg(err.error.detail || err.message, false);
         }
       );
     }
+  }
+
+  private showMsg(msg: string, success: boolean): void {
+    this.snackBar.open(msg, 'close', {panelClass: [success? 'snack-success': 'snack-error'], duration: (success? 3000 : 1500)});
   }
 }

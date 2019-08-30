@@ -66,13 +66,18 @@
   justify-content: center;
 }
 
-::ng-deep snack-bar-container.snack-error {
+::ng-deep snack-bar-container{
+  &.snack-error {
+    background: #B00020;
+  }
+  &.snack-success {
+    background: #28a745;
+  }
   width: 380px;
   margin: auto;
-  background: rgb(233, 30, 99);
-  color: #fff;
+  span { color: #fff;}
   .mat-button-wrapper {
-    color: #ddd;
+    color: #fff;
   }
 }
 
