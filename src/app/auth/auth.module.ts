@@ -21,7 +21,6 @@ const routes: Routes = [
   imports: [
     CommonModule,
     MaterialModule,
-    MaterialModule,
     MatSnackBarModule,
     ReactiveFormsModule,
     FormsModule,

@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { AuthenticationService } from 'src/app/auth/auth.service';
+import { fromEvent } from 'rxjs/internal/observable/fromEvent';
+import { filter, map } from 'rxjs/operators';
+import { TokenStorage } from 'src/app/auth/token-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +10,26 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class HeaderComponent implements OnInit {
-
-  constructor() { }
+  // @Input('username') username: string;
+  username = '';
+  constructor(
+    private authService: AuthenticationService,
+    private tokenStorage: TokenStorage
+  ) {
+    this.username = this.tokenStorage.getUsername();
+   }
 
   ngOnInit() {
+    this.authService.username$.subscribe(
+      res => {
+        console.log(res);
+        this.username = res;
+      }
+    );
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
 }

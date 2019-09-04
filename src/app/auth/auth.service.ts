@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable, from, of } from 'rxjs';
+import { Subject, Observable, from, of, BehaviorSubject } from 'rxjs';
 import { map, catchError, tap, switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { TokenStorage } from './token-storage.service';
 import { Credential } from './credential.model';
 import { AuthService } from 'ngx-auth';
+// import { SubjectService } from '../services/subject.service';
 
 const API_URL = environment.apiUrl;
 const httpOptions = {
@@ -14,10 +15,13 @@ const httpOptions = {
 
 @Injectable()
 export class AuthenticationService implements AuthService {
-
+  username$: Subject<string>;
   constructor(
     private http: HttpClient,
-    private tokenStorage: TokenStorage) { }
+    private tokenStorage: TokenStorage,
+    ) {
+      this.username$ = new BehaviorSubject(this.tokenStorage.getUsername());
+    }
 
     public isAuthorized(): Observable<boolean> {
       return this.tokenStorage.getAccessToken().pipe(map(token => !!token));
@@ -39,6 +43,8 @@ export class AuthenticationService implements AuthService {
     public login(credential: Credential): Observable<any> {
       return this.http.post<AccessData>(`${API_URL}/token/`, credential).pipe(
         map((result: any) => {
+          this.tokenStorage.saveUsername(credential.username);
+          this.username$.next(credential.username);
           if (result instanceof Array) {
             return result.pop();
           }
@@ -51,6 +57,7 @@ export class AuthenticationService implements AuthService {
 
     public logout(refresh?: boolean): void {
       this.tokenStorage.clear();
+      this.username$.next(null);
       if (refresh) {
         location.reload(true);
       }
@@ -89,7 +96,7 @@ export class AuthenticationService implements AuthService {
           .setAccessToken(accessData.access)
           .setRefreshToken(accessData.refresh);
           // .setUserRoles(accessData.roles);
-        // this.onCredentialUpdated$.next(accessData);
+        // this.onCredentialUpdate$.next(accessData);
       }
     }
     private handleError<T>(operation = 'operation', result?: any) {

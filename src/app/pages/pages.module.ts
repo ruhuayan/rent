@@ -5,6 +5,9 @@ import { PagesComponent } from './pages.component';
 import { HeaderComponent } from './header/header.component';
 import { MaterialModule } from '../material/material.module';
 import { NotFoundComponent } from './errors/notFound.component';
+import { AuthenticationService } from '../auth/auth.service';
+import { HttpClientModule } from '@angular/common/http';
+import { TokenStorage } from '../auth/token-storage.service';
 
 @NgModule({
 	declarations: [
@@ -15,8 +18,9 @@ import { NotFoundComponent } from './errors/notFound.component';
 	imports: [
 		CommonModule,
         PagesRoutingModule,
+        HttpClientModule,
         MaterialModule
 	],
-	providers: []
+	providers: [AuthenticationService, TokenStorage]
 })
 export class PagesModule {}

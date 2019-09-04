@@ -35,6 +35,16 @@ header {
           cursor: default;
         }
       }
+      &.lang {
+        position: relative;
+        font-family: Arial;
+      }
+      select {
+        background: rgba(0, 0, 0, 0);
+        border: none;
+        font-size: 1rem;
+        color: #fff;
+      }
       ul.sub-nav {
         display: none;
       }

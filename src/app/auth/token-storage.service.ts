@@ -22,6 +22,9 @@ export class TokenStorage {
     } catch (e) {}
   }
 
+  public getUsername(): string {
+    return localStorage.getItem('username');
+  }
 
   public setAccessToken(token: string): TokenStorage {
     localStorage.setItem('accessToken', token);
@@ -36,6 +39,10 @@ export class TokenStorage {
     return this;
   }
 
+  public saveUsername(username: string): TokenStorage {
+    localStorage.setItem('username', username);
+    return this;
+  }
 
   public setUserRoles(roles: any): any {
     if (roles != null) {
@@ -51,6 +58,6 @@ export class TokenStorage {
   public clear() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    localStorage.removeItem('userRoles');
+    localStorage.removeItem('username');
   }
 }
