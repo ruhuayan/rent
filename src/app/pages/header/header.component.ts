@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AuthenticationService } from 'src/app/auth/auth.service';
 import { fromEvent } from 'rxjs/internal/observable/fromEvent';
-import { filter, map } from 'rxjs/operators';
 import { TokenStorage } from 'src/app/auth/token-storage.service';
 
 @Component({
@@ -16,7 +15,7 @@ export class HeaderComponent implements OnInit {
     private authService: AuthenticationService,
     private tokenStorage: TokenStorage
   ) {
-    this.username = this.tokenStorage.getUsername();
+    // this.username = this.tokenStorage.getUsername();
    }
 
   ngOnInit() {

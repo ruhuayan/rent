@@ -8,7 +8,8 @@ import { NotFoundComponent } from './errors/notFound.component';
 import { AuthenticationService } from '../auth/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TokenStorage } from '../auth/token-storage.service';
-
+import { StoreModule } from '@ngrx/store';
+import { authReducer } from '../redux/auth.reducer';
 @NgModule({
 	declarations: [
         PagesComponent,
@@ -19,7 +20,8 @@ import { TokenStorage } from '../auth/token-storage.service';
 		CommonModule,
         PagesRoutingModule,
         HttpClientModule,
-        MaterialModule
+        MaterialModule,
+        StoreModule.forRoot({ iStates:  authReducer}),
 	],
 	providers: [AuthenticationService, TokenStorage]
 })
