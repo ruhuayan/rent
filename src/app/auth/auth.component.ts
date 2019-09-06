@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
-import { AuthenticationService } from './auth.service';
+import { AuthenticationService } from '../share/auth.service';
 import { Credential } from './credential.model';
 import { Router } from '@angular/router';
 import { SpinnerButtonOptions } from '../spinner-button/button-options.interface';
@@ -87,19 +87,19 @@ export class AuthComponent implements OnInit {
   }
 
   login(): void {
-   
+
     if (this.loginForm.valid) {
       this.spinner.active = true;
       console.log(this.loginForm.value);
       this.authService.login(this.loginForm.value as Credential).subscribe(
         res => {
           if (typeof res !== 'undefined') {
-            this.router.navigate(['/']);
+            // this.router.navigate(['/']);
           } else {
             this.showMsg('Login failed', false);
           }
           this.spinner.active = false;
-          this.cdr.detectChanges();
+          // this.cdr.detectChanges();
         },
         err => {
           console.log(err);
@@ -110,7 +110,7 @@ export class AuthComponent implements OnInit {
     }
   }
   signup(): void {
-    
+
     this.formVars.signup.submitted = true;
     if (this.signupForm.valid) {
       this.spinner.active = true;
@@ -125,16 +125,16 @@ export class AuthComponent implements OnInit {
         }
         this.spinner.active = false;
         this.cdr.detectChanges();
-      }, 
+      },
       err => {
         console.log(err);
         this.spinner.active = false;
         this.showMsg(err.error.detail || err.message, false);
       });
-    } 
+    }
   }
   recover(): void {
-    
+
     if (this.forgotForm.valid) {
       this.spinner.active = true;
       console.log(this.forgotForm.value);
@@ -145,7 +145,7 @@ export class AuthComponent implements OnInit {
           } else {
             this.showMsg('Reset Password Request failed', false);
           }
-          
+
           this.spinner.active = false;
         }, err => {
           this.spinner.active = false;

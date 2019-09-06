@@ -4,9 +4,9 @@ import { Subject, Observable, from, of, BehaviorSubject } from 'rxjs';
 import { map, catchError, tap, switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { TokenStorage } from './token-storage.service';
-import { Credential } from './credential.model';
+import { Credential } from '../auth/credential.model';
 import { AuthService } from 'ngx-auth';
-// import { SubjectService } from '../services/subject.service';
+
 
 const API_URL = environment.apiUrl;
 const httpOptions = {
@@ -43,7 +43,7 @@ export class AuthenticationService implements AuthService {
     public login(credential: Credential): Observable<any> {
       return this.http.post<AccessData>(`${API_URL}/token/`, credential).pipe(
         map((result: any) => {
-          this.tokenStorage.saveUsername(credential.username);
+          this.tokenStorage.saveUsername(credential.username);console.log('1')
           this.username$.next(credential.username);
           if (result instanceof Array) {
             return result.pop();
