@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AuthenticationService } from 'src/app/share/auth.service';
-import { TokenStorage } from 'src/app/share/token-storage.service';
+import { SharedService } from 'src/app/share/shared.service';
 
 @Component({
   selector: 'app-header',
@@ -8,19 +8,17 @@ import { TokenStorage } from 'src/app/share/token-storage.service';
   styles: []
 })
 export class HeaderComponent implements OnInit {
-  // @Input('username') username: string;
   username = '';
   constructor(
     private authService: AuthenticationService,
-    private tokenStorage: TokenStorage
+    private sharedService: SharedService
   ) {
   }
 
   ngOnInit() {
-    this.username = this.tokenStorage.getUsername();
-    this.authService.username$.subscribe(
+
+    this.sharedService.username$.subscribe(
       res => {
-        console.log(res);
         this.username = res;
       }
     );

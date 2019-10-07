@@ -1,0 +1,28 @@
+::ng-deep .mat-menu-profile {
+  width: 200px;
+  margin-left: 1rem;
+  background: rgba(var(--main-blue-a), .8);
+  border-radius: 0 !important;
+  margin-top: 1rem;
+  .mat-menu-item {
+    color: #fff !important;
+    mat-icon {
+      color: #fff;
+    }
+  }
+}
+::ng-deep .mat-menu-language {
+  background: rgba(255, 255, 255, .7);
+  border-radius: 0 !important;
+  margin-top: 1rem;
+  .mat-menu-item {
+    // color: #fff !important;
+    display: flex;
+    align-items: center;
+    img {
+      width: 24px;
+      height: 24px;
+      margin-right: 1rem;
+    }
+  }
+}

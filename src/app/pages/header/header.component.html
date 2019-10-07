@@ -12,19 +12,42 @@
       <a href="javascript:;" *ngIf="username" [matMenuTriggerFor]="userMenu">
         <mat-icon>account_circle</mat-icon><span>{{username}}</span>
       </a>
-      <mat-menu #userMenu="matMenu" yPosition="below">
-        <button mat-menu-item>Profile</button>
-        <button mat-menu-item (click)="logout()">Logout</button>
+      <mat-menu #userMenu="matMenu" yPosition="below" class="mat-menu-profile">
+        <button mat-menu-item>
+          <mat-icon>assignment_ind</mat-icon>
+          <span>Profile</span>
+        </button>
+        <button mat-menu-item routerLink="/listing">
+          <mat-icon>list</mat-icon>
+          <span>Listing</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>lock_open</mat-icon>
+          <span>Logout</span>
+        </button>
       </mat-menu>
       <!-- <a routerLink="/auth" routerLinkActive="active" *ngIf="username">
         <mat-icon>account_circle</mat-icon><span>{{username}}</span>
       </a> -->
     </li>
-    <li><a href="javascript:;" [matMenuTriggerFor]="langMenu"><span>En</span> <mat-icon>expand_more</mat-icon></a>
-      <mat-menu #langMenu="matMenu" yPosition="below">
-          <button mat-menu-item>EN</button>
-          <button mat-menu-item>CN</button>
-          <button mat-menu-item>FR</button>
+    <li>
+      <a href="javascript:;" [matMenuTriggerFor]="langMenu">
+        <span>EN</span>
+        <mat-icon>expand_more</mat-icon>
+      </a>
+      <mat-menu #langMenu="matMenu" yPosition="below" class="mat-menu-language">
+          <button mat-menu-item>
+            <img src="/assets/icons/en.svg" />
+            <span>EN</span>
+          </button>
+          <button mat-menu-item>
+            <img src="/assets/icons/cn.svg" />
+            <span>CN</span>
+          </button>
+          <button mat-menu-item>
+            <img src="/assets/icons/fr.svg" />
+            <span>FR</span>
+          </button>
         </mat-menu>
     </li>
   </ul>

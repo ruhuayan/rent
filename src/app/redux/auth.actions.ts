@@ -11,7 +11,6 @@ export class Login implements Action {
 }
 export class Logout implements Action {
   readonly type = ActionTypes.Logout;
-  constructor(public payload: string) {}
 }
 export type ActionUnion = Login | Logout;
 

@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
 import { TokenStorage } from './token-storage.service';
 import { Credential } from '../auth/credential.model';
 import { AuthService } from 'ngx-auth';
-
+import { SharedService } from './shared.service';
 
 const API_URL = environment.apiUrl;
 const httpOptions = {
@@ -15,12 +15,14 @@ const httpOptions = {
 
 @Injectable()
 export class AuthenticationService implements AuthService {
-  username$: Subject<string>;
+  // username$: Subject<string>;
   constructor(
     private http: HttpClient,
     private tokenStorage: TokenStorage,
+    private sharedService: SharedService,
+    // private store: Store<IAuthState>
     ) {
-      this.username$ = new BehaviorSubject(this.tokenStorage.getUsername());
+      // this.username$ = new BehaviorSubject(this.tokenStorage.getUsername());
     }
 
     public isAuthorized(): Observable<boolean> {
@@ -43,8 +45,8 @@ export class AuthenticationService implements AuthService {
     public login(credential: Credential): Observable<any> {
       return this.http.post<AccessData>(`${API_URL}/token/`, credential).pipe(
         map((result: any) => {
-          this.tokenStorage.saveUsername(credential.username);console.log('1')
-          this.username$.next(credential.username);
+          localStorage.setItem('username', credential.username);
+          this.sharedService.username$.next(credential.username);
           if (result instanceof Array) {
             return result.pop();
           }
@@ -57,7 +59,8 @@ export class AuthenticationService implements AuthService {
 
     public logout(refresh?: boolean): void {
       this.tokenStorage.clear();
-      this.username$.next(null);
+      this.sharedService.username$.next(null);
+      // this.store.dispatch(new authActions.Logout());
       if (refresh) {
         location.reload(true);
       }

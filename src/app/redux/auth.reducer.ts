@@ -3,11 +3,11 @@ import { ActionTypes, ActionUnion } from './auth.actions';
 // import { ActionReducer, Action } from '@ngrx/store';
 
 export interface IAuthState {
-   username: string
+   username: string;
 }
 
 export const initState: IAuthState = {
-    username: ''
+    username: localStorage.getItem('username')
 };
 
 // const saveState = (_state: IAuthState) => {
@@ -18,13 +18,11 @@ export const initState: IAuthState = {
 export function authReducer(state: IAuthState = initState, action: ActionUnion): IAuthState {
     // let newState: IAuthState;
     switch (action.type) {
-        
         case ActionTypes.Login:
-            break;
+            return { username: action.payload};
 
         case ActionTypes.Logout:
-            
-            return state;
+            return {username: ''};
 
         default:
             return state;

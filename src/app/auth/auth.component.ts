@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators, FormBuilder, FormGroup} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { AuthenticationService } from '../share/auth.service';
 import { Credential } from './credential.model';
 import { Router } from '@angular/router';
@@ -90,11 +90,10 @@ export class AuthComponent implements OnInit {
 
     if (this.loginForm.valid) {
       this.spinner.active = true;
-      console.log(this.loginForm.value);
       this.authService.login(this.loginForm.value as Credential).subscribe(
         res => {
           if (typeof res !== 'undefined') {
-            // this.router.navigate(['/']);
+            this.router.navigate(['/'], { state: { username: this.loginForm.value.username }});
           } else {
             this.showMsg('Login failed', false);
           }
