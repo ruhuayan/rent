@@ -1,5 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+:root {
+  --main-navy-medium:#cddbe2;
+  --main-navy-medium-a:205,219,226;
+  --main-navy-dark:#7695a5;
+  --main-navy-dark-a:118,149,165;
+  --main-navy-extra-dark:#394f5a;
+  --main-navy-extra-dark-a:57,79,90;
+  --main-green-light-a:229,250,240;
+  --main-green-light:#e5faf0;
+  --main-green-a:19,203,110;
+  --main-green:#13cb6e;
+  --main-green-dark-a:31,164,92;
+  --main-green-dark:#1fa45c;
+  --main-blue-extra-light-a:239,250,255;
+  --main-blue-extra-light:#effaff;
+  --main-blue-light-a:158,220,247;
+  --main-blue-light:#9edcf7;
+  --main-blue-a:25,118,210;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 header {
