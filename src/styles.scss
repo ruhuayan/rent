@@ -52,7 +52,7 @@ header {
         align-items: center;
         mat-icon { padding-right: .5rem;}
         &.active {
-          color: #ccc;
+          color: var(--main-navy-extra-dark);
           cursor: default;
         }
       }

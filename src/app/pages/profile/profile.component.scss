@@ -1,3 +1,7 @@
+// ::ng-deep  .mat-list-item-content{
+//   color: #fff;
+// }
+
 mat-sidenav-container {
   position: fixed;
   height: 100%;
@@ -7,5 +11,19 @@ mat-sidenav-container {
 }
 
 mat-sidenav {
-  background: rgb(var(--main-blue-a));
+    background: rgba(var(--main-blue-a), .8);
+    border: none;
+}
+
+.page-title {
+  a.toggle {
+        // color: #333;
+        mat-icon {
+            color: #999;
+            font-size: 40px;
+        }
+  }
+//   display: flex;
+//   align-items: center;
+//   padding: 1rem;
 }

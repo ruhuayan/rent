@@ -9,16 +9,16 @@ import { SharedModule } from '../share/shared.module';
 import { AuthModule } from '../auth/auth.module';
 @NgModule({
 	declarations: [
-    PagesComponent,
-    HeaderComponent,
-    NotFoundComponent,
+        PagesComponent,
+        HeaderComponent,
+        NotFoundComponent,
 	],
 	imports: [
 		CommonModule,
-    PagesRoutingModule,
-    SharedModule,
-    MaterialModule,
-    AuthModule,
+        PagesRoutingModule,
+        SharedModule,
+        MaterialModule,
+        AuthModule,
     // StoreModule.forRoot({ iStates:  authReducer}),
 	],
 	providers: []
