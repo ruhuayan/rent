@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material/material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile.component';
+import { SpinnerButtonModule } from 'src/app/spinner-button/spinner-button.module';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     MaterialModule,
+    SpinnerButtonModule,
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forChild(routes)
