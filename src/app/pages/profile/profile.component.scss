@@ -1,32 +1,59 @@
-// ::ng-deep  .mat-list-item-content{
-//   color: #fff;
-// }
-
 mat-sidenav-container {
-  position: fixed;
-  height: 100%;
-  min-height: 100%;
   width: 100%;
-  min-width: 100%;
+  // max-width: 1200px;
+  // margin: auto;
+  mat-sidenav {
+    // background: rgba(var(--main-blue-a), .8);
+    background-color: #fafafa;
+    border: none;
+    mat-list {
+      padding: 0;
+      mat-list-item {
+        width: 98%;
+        border: 1px solid #999;
+        border-top: none;
+        text-align: center;
+      }
+    }
+  }
   mat-sidenav-content {
-      padding: 1rem;
+      padding: 2rem;
   }
 }
 
-mat-sidenav {
-    background: rgba(var(--main-blue-a), .8);
-    border: none;
-}
-
 .page-title {
-  a.toggle {
-        // color: #333;
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 550;
+    a.toggle {
+        margin-right: 1rem;
         mat-icon {
             color: #999;
             font-size: 40px;
         }
+    }
+}
+.profile-container {
+  display: flex;
+  mat-card {
+    width: 50%;
+    min-width: 320px;
+    // height: 500px;
+    .example-header-image {
+      background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+      background-size: cover;
+    }
   }
-//   display: flex;
-//   align-items: center;
-//   padding: 1rem;
+  mat-accordion {
+    width: 45%;
+    margin-left: 1rem;
+    form .submit {
+      width: 100%;
+      text-align: center;
+      ::ng-deep button {
+        width: 150px;
+      }
+    }
+  }
 }
