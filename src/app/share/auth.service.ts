@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Subject, Observable, from, of, BehaviorSubject } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, catchError, tap, switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { TokenStorage } from './token-storage.service';
 import { Credential } from '../auth/credential.model';
 import { AuthService } from 'ngx-auth';
 import { SharedService } from './shared.service';
+import { Token } from './token.interface';
 
 const API_URL = environment.apiUrl;
 const httpOptions = {
@@ -15,27 +16,26 @@ const httpOptions = {
 
 @Injectable()
 export class AuthenticationService implements AuthService {
-  // username$: Subject<string>;
+
   constructor(
     private http: HttpClient,
     private tokenStorage: TokenStorage,
     private sharedService: SharedService,
     // private store: Store<IAuthState>
     ) {
-      // this.username$ = new BehaviorSubject(this.tokenStorage.getUsername());
     }
 
     public isAuthorized(): Observable<boolean> {
-      return this.tokenStorage.getAccessToken().pipe(map(token => !!token));
+      return this.tokenStorage.getToken().pipe(map(token => !!token));
     }
 
     public getAccessToken(): Observable<string> {
-      return this.tokenStorage.getAccessToken();
+      return this.tokenStorage.getToken().pipe(map(token => token.access));
     }
 
-    public getUserRoles(): Observable<any> {
-      return this.tokenStorage.getUserRoles();
-    }
+    // public getUserRoles(): Observable<any> {
+    //   return this.tokenStorage.getUserRoles();
+    // }
 
     public register(credential: Credential): Observable<any> {
       return this.http.post(`${API_URL}/user/register`, credential, httpOptions);
@@ -43,14 +43,13 @@ export class AuthenticationService implements AuthService {
     }
 
     public login(credential: Credential): Observable<any> {
-      return this.http.post<AccessData>(`${API_URL}/token/`, credential).pipe(
+      return this.http.post<Token>(`${API_URL}/token/`, credential).pipe(
         map((result: any) => {
-          localStorage.setItem('username', credential.username);
           this.sharedService.username$.next(credential.username);
           if (result instanceof Array) {
             return result.pop();
           }
-          return result;
+          return {...result, name: credential.username};
         }),
         tap(this.saveAccessData.bind(this)),
         // catchError(this.handleError('login', []))
@@ -73,9 +72,9 @@ export class AuthenticationService implements AuthService {
     }
 
     public refreshToken(): Observable<any> {
-      return this.tokenStorage.getRefreshToken().pipe(
-        switchMap((refreshToken: string) => {
-          return this.http.post<AccessData>(`${API_URL}/refresh`, refreshToken, httpOptions);
+      return this.tokenStorage.getToken().pipe(
+        switchMap((token: Token) => {
+          return this.http.post<AccessData>(`${API_URL}/refresh`, token.refresh, httpOptions);
         }),
         tap(this.saveAccessData.bind(this)),
         catchError(err => {
@@ -93,11 +92,10 @@ export class AuthenticationService implements AuthService {
       return response.status === 401;
     }
 
-    private saveAccessData(accessData: AccessData) {
+    private saveAccessData(accessData: Token) {
       if (typeof accessData !== 'undefined') {
         this.tokenStorage
-          .setAccessToken(accessData.access)
-          .setRefreshToken(accessData.refresh);
+          .setAccessToken(accessData);
           // .setUserRoles(accessData.roles);
         // this.onCredentialUpdate$.next(accessData);
       }
